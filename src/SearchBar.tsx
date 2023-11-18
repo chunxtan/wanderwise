@@ -4,10 +4,13 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { DatePicker } from "@mui/x-date-pickers";
 import './SearchBar.css'
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import { Date, SearchBarStoreInstance } from "./SearchBarStore";
 
-export default function SearchBar({ userInput, setUserInput, setAccommsData }) {
+export const SearchBar = () => {
   const [destGaiaId, setDestGaiaId] = React.useState("");
+
+  const store = SearchBarStoreInstance;
 
   const getFlights = () => {
 
@@ -17,7 +20,7 @@ export default function SearchBar({ userInput, setUserInput, setAccommsData }) {
     const baseUrl = 'https://hotels4.p.rapidapi.com/locations/v3/search';
 
     const queryParams = {
-      q: `${userInput.destination}`,
+      q: `${store.userInput.destination}`,
       locale: 'en_SG',
       siteid: '300000040'
     };
@@ -62,18 +65,18 @@ export default function SearchBar({ userInput, setUserInput, setAccommsData }) {
           regionId: '604'
         },
         checkInDate: {
-          day: userInput.fromDate.day,
-          month: userInput.fromDate.month,
-          year: userInput.fromDate.year
+          day: store.userInput.fromDate.day,
+          month: store.userInput.fromDate.month,
+          year: store.userInput.fromDate.year
         },
         checkOutDate: {
-          day: userInput.toDate.day,
-          month: userInput.toDate.month,
-          year: userInput.toDate.year
+          day: store.userInput.toDate.day,
+          month: store.userInput.toDate.month,
+          year: store.userInput.toDate.year
         },
         rooms: [
           {
-            adults: userInput.travellers,
+            adults: store.userInput.travellers,
             children: []
           }
         ],
@@ -89,7 +92,7 @@ export default function SearchBar({ userInput, setUserInput, setAccommsData }) {
       console.log(response);
       const result = await response.json();
       console.log(result);
-      setAccommsData(result.data.propertySearch.properties);
+      SearchBarStoreInstance.setAccommsData(result.data.propertySearch.properties);
     } catch (error) {
       console.error(error);
     }
@@ -109,9 +112,7 @@ export default function SearchBar({ userInput, setUserInput, setAccommsData }) {
           label="Where From"
           type="search"
           variant="standard"
-          onChange={(e) => setUserInput((prevState) => {
-            return {...prevState, origin:`${e.target.value}` }
-          })}
+          onChange={(e) => store.setUserInput({...store.userInput, origin:`${e.target.value}` })}
         />
         <TextField 
           className="inputField"
@@ -119,9 +120,7 @@ export default function SearchBar({ userInput, setUserInput, setAccommsData }) {
           label="Where To"
           type="search"
           variant="standard"
-          onChange={(e) => setUserInput((prevState) => {
-            return {...prevState, destination:`${e.target.value}` }
-          })}
+          onChange={(e) => store.setUserInput({...store.userInput, destination:`${e.target.value}` })}
         />
       </div>
       <div id="input-who" className="inputCat">
@@ -131,39 +130,40 @@ export default function SearchBar({ userInput, setUserInput, setAccommsData }) {
           label="Travellers"
           type="number"
           variant="standard"
-          onChange={(e) => setUserInput((prevState) => {
-            return {...prevState, travellers: parseInt(e.target.value, 10) }
-          })}
+          onChange={(e) => 
+            store.setUserInput({
+              ...store.userInput, 
+              travellers: parseInt(e.target.value, 10) 
+            })
+          }
         />
       </div>
       <div id="input=when" className="inputCat">
         <DatePicker
           label="When From"
-          onChange={(date) => {
-            const newFromDateArr = dayjs(date).format('DD/MM/YYYY').split('/');
-            newFromDateArr.forEach(num => parseInt(num, 10));
-            const newFromDate = {
+          onChange={(date: Dayjs | null) => {
+            const newFromDateArrStr = dayjs(date).format('DD/MM/YYYY').split('/');
+            const newFromDateArr = newFromDateArrStr.map(num => parseInt(num, 10));
+            const newFromDate: Date = {
               day: newFromDateArr[0],
               month: newFromDateArr[1],
               year: newFromDateArr[2]
             }
-            setUserInput((prevInput) => {
-            return {...prevInput, fromDate: newFromDate}
-          })}}  
+            store.setUserInput({...store.userInput,
+              fromDate: newFromDate})}}  
         />
         <DatePicker
           label="When To"
-          onChange={(date) => {
-            const newToDateArr = dayjs(date).format('DD/MM/YYYY').split('/');
-            newToDateArr.forEach(num => parseInt(num, 10));
-            const newToDate = {
+          onChange={(date: Dayjs | null) => {
+            const newToDatArrStr = dayjs(date).format('DD/MM/YYYY').split('/');
+            const newToDateArr = newToDatArrStr.map(num => parseInt(num, 10));
+            const newToDate: Date = {
               day: newToDateArr[0],
               month: newToDateArr[1],
               year: newToDateArr[2]
             }
-            setUserInput((prevInput) => {
-            return {...prevInput, toDate: newToDate}
-          })}}  
+            store.setUserInput({...store.userInput,
+              toDate: newToDate})}}  
         />
       </div>
       <Button variant="contained" 
@@ -176,3 +176,5 @@ export default function SearchBar({ userInput, setUserInput, setAccommsData }) {
     </Box>
   )
 }
+
+export default SearchBar;
