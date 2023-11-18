@@ -14,9 +14,24 @@ export interface Date {
   year: number
 }
 
+export interface AccommsData {
+  id: string,
+  name: string,
+  image: string,
+  mapMarker: {
+    lat: number,
+    long: number
+  },
+  price: string,
+  reviews: {
+    score: number,
+    total: number
+  }
+}
+
 class SearchBarStore {
   userInput: UserInput;
-  accommsData: any[];
+  accommsData: AccommsData[];
 
   constructor() {
     makeObservable(this, {
@@ -46,7 +61,7 @@ class SearchBarStore {
     this.userInput = newInput;
   }
 
-  setAccommsData(accomms: any[]) {
+  setAccommsData(accomms: AccommsData[]) {
     this.accommsData = accomms;
   }
 }

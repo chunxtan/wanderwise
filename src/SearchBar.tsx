@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import { DatePicker } from "@mui/x-date-pickers";
 import './SearchBar.css'
 import dayjs, { Dayjs } from 'dayjs';
-import { Date, SearchBarStoreInstance } from "./SearchBarStore";
+import { Date, AccommsData, SearchBarStoreInstance } from "./SearchBarStore";
 
 export const SearchBar = () => {
   const [destGaiaId, setDestGaiaId] = React.useState("");
@@ -82,17 +82,33 @@ export const SearchBar = () => {
         ],
         resultsStartingIndex: 0,
         resultsSize: 25,
-        sort: 'REVIEW',
+        sort: 'RECOMMENDED',
         filters: {guestRating: '40'}
       })
     };
 
     try {
       const response = await fetch(url, options);
-      console.log(response);
       const result = await response.json();
       console.log(result);
-      SearchBarStoreInstance.setAccommsData(result.data.propertySearch.properties);
+      const newAccommsData: AccommsData[] = result.data.propertySearch.properties.map((listing:any) => {
+        return {
+          id: listing.id,
+          name: listing.name,
+          image: listing.propertyImage.image.url,
+          mapMarker: {
+            lat: listing.mapMarker.latLong.latitude,
+            long: listing.mapMarker.latLong.longitude
+          },
+          price: listing.price.options[0].formattedDisplayPrice,
+          reviews: {
+            score: listing.reviews.score,
+            total: listing.reviews.total
+          }
+        }
+      })
+      console.log(newAccommsData);
+      store.setAccommsData(newAccommsData);
     } catch (error) {
       console.error(error);
     }
@@ -172,7 +188,6 @@ export const SearchBar = () => {
         }}>
           SEARCH
       </Button>
-      
     </Box>
   )
 }
