@@ -13,7 +13,7 @@ export const SearchBar = () => {
   const store = SearchBarStoreInstance;
 
   const getFlights = () => {
-
+    
   }
 
   const getAccommsDestId = async () => {
@@ -184,7 +184,6 @@ export const SearchBar = () => {
       </div>
       <Button variant="contained" 
         onClick={() => {
-          getAccomms();
         }}>
           SEARCH
       </Button>
