@@ -1,10 +1,13 @@
 import React from 'react';
-import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
+import { Alert, Card, CardActions, CardContent, IconButton, Snackbar, Typography } from "@mui/material";
 import ResContStoreInstance from './ResultsContainerStore';
 import { SearchBarStoreInstance } from './SearchBarStore';
 import { observer } from 'mobx-react';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export const FlightAccommsCombo:React.FC = observer(() => {
+  const [open, setOpen] = React.useState(false);
+
   let flightPrice = 0, accommsPrice = 0;
 
   if (ResContStoreInstance.flightSelId) {
@@ -23,22 +26,49 @@ export const FlightAccommsCombo:React.FC = observer(() => {
     accommsPrice = parseFloat(accommsSel[0].price.replace(/[^\d]/g, ""));
   }
 
-  const totalPrice = flightPrice + accommsPrice;
+  const totalPrice = (flightPrice + accommsPrice);
+
+  const handleSave = () => {
+    setOpen(true);
+    addToSaved();
+  }
+
+  const addToSaved = () => {
+
+  }
 
   return (
-    <Card>
-      <CardContent>
-          <Typography variant="subtitle2">
-            Total Cost
-          </Typography>
-          <Typography variant="h6">
-            ${totalPrice}
-          </Typography>
-          <Typography variant="caption">Flights - ${flightPrice}</Typography>
-          <br />
-          <Typography variant="caption">Accomms - ${accommsPrice}</Typography>
-      </CardContent>
-    </Card>
+    <>
+      <Card>
+        <CardContent>
+            <Typography variant="subtitle2">
+              Total Cost
+            </Typography>
+            <Typography variant="h6">
+              ${totalPrice}
+            </Typography>
+            <Typography variant="caption">Flights - ${flightPrice}</Typography>
+            <br />
+            <Typography variant="caption">Accomms - ${accommsPrice}</Typography>
+        </CardContent>
+        <CardActions style={{ display: "block" }}>
+          <IconButton aria-label="save">
+            <FavoriteIcon style={{ color: "red" }} onClick={() => handleSave()}>
+              SAVE
+            </FavoriteIcon>
+          </IconButton>
+        </CardActions>
+      </Card>
+      <Snackbar 
+        anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
+        open={open}
+        message="Trip Details Saved!"
+        onClose={() => setOpen(false)}
+        autoHideDuration={5000}
+      >
+        <Alert severity="success">Trip details saved!</Alert>
+      </Snackbar>
+    </>
   )
 })
 
