@@ -29,6 +29,24 @@ export interface AccommsData {
   }
 }
 
+export type flightSchedule = {
+  year: number,
+  month: number,
+  day: number,
+  hour: number,
+  minute: number,
+  second: number
+}
+
+export interface FlightsData {
+  id: string,
+  price: string,
+  departureDateTime: flightSchedule,
+  arrivalDateTime: flightSchedule,
+  flightDurationMin: number,
+  stopCount: number
+}
+
 const dummyAccData = [
     {
         "id": "32111542",
@@ -382,14 +400,23 @@ const dummyAccData = [
     }
 ]
 
+
 class SearchBarStore {
   userInput: UserInput;
   accommsData: AccommsData[];
+  iataCodes: {
+    origin: string;
+    destination: string;
+  };
+  flightsData: FlightsData[];
 
   constructor() {
     makeObservable(this, {
       accommsData: observable,
-      setAccommsData: action
+      setAccommsData: action,
+
+      flightsData: observable,
+      setFlightsData: action
     });
 
     this.userInput = {
@@ -408,6 +435,11 @@ class SearchBarStore {
       }
     },
     this.accommsData = dummyAccData;
+    this.iataCodes = {
+      origin: "",
+      destination: ""
+    },
+    this.flightsData = [];
   }
 
   setUserInput(newInput: UserInput) {
@@ -416,6 +448,10 @@ class SearchBarStore {
 
   setAccommsData(accomms: AccommsData[]) {
     this.accommsData = accomms;
+  }
+
+  setFlightsData(flights: FlightsData[]) {
+    this.flightsData = flights;
   }
 }
 

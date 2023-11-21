@@ -9,7 +9,7 @@ export default function ResultsContainer() {
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid xs={12} md={4} lg={4}>
-          <AccommsResults />
+          <FlightsResults />
         </Grid>
         <Grid xs={12} md={4} lg={4}>
           <AccommsResults />

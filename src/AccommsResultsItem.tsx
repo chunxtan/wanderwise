@@ -1,13 +1,13 @@
 import React from "react";
 import { Card, CardContent, Typography } from "@mui/material";
 import { AccommsData } from "./SearchBarStore";
-import './AccommsResultItem.css'
+import './AccommsResultsItem.css'
 
 type AccommsResProps = {
   listing: AccommsData
 }
 
-const AccommsResultsItem: React.FC<AccommsResProps> = ({listing}) => {
+const AccommsResultsItem: React.FC<AccommsResProps> = ({ listing }) => {
   return (
     <Card className="AccommsResItem">
       <CardContent>

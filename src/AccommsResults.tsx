@@ -1,6 +1,6 @@
 import React from "react";
 import { SearchBarStoreInstance } from "./SearchBarStore";
-import AccommsResultsItem from "./AccommsResultItem";
+import AccommsResultsItem from "./AccommsResultsItem";
 import { AccommsData } from "./SearchBarStore";
 import { observer } from 'mobx-react';
 
