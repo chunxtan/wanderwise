@@ -7,7 +7,7 @@ const FlightsResults: React.FC = observer(() => {
   return (
     SearchBarStoreInstance.flightsData.map(data => {
       return (
-        <FlightsResultsItem flightsData={data} />
+        <FlightsResultsItem key={data.id} flightsData={data} />
       )
     })
   )

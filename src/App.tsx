@@ -10,6 +10,7 @@ function App() {
 
   return (
     <>
+      <h1>Wanderwise</h1>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
         <SearchBar />
         <ResultsContainer />

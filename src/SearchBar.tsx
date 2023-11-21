@@ -2321,6 +2321,7 @@ const dummyFlightData = {
     }
   }
 }
+
 export const SearchBar = () => {
   const [destGaiaId, setDestGaiaId] = React.useState("");
 

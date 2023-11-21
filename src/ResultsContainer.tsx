@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import Grid from '@mui/system/Unstable_Grid';
 import FlightsResults from './FlightsResults';
 import AccommsResults from './AccommsResults';
+import { FlightAccommsCombo } from './FlightAccommsCombo';
 
 export default function ResultsContainer() {
   return (
@@ -15,7 +16,7 @@ export default function ResultsContainer() {
           <AccommsResults />
         </Grid>
         <Grid xs={12} md={4} lg={2}>
-          <AccommsResults />
+          <FlightAccommsCombo />
         </Grid>
       </Grid>
     </Box>
