@@ -4,14 +4,16 @@ import ResContStoreInstance from './ResultsContainerStore';
 import { SearchBarStoreInstance } from './SearchBarStore';
 import { observer } from 'mobx-react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import Airtable from 'airtable';
 
 export const FlightAccommsCombo:React.FC = observer(() => {
   const [open, setOpen] = React.useState(false);
 
   let flightPrice = 0, accommsPrice = 0;
+  let flightSel, accommsSel;
 
   if (ResContStoreInstance.flightSelId) {
-    const flightSel = SearchBarStoreInstance.flightsData.filter((flight) => {
+    flightSel = SearchBarStoreInstance.flightsData.filter((flight) => {
       return flight.id === ResContStoreInstance.flightSelId
     })
 
@@ -19,7 +21,7 @@ export const FlightAccommsCombo:React.FC = observer(() => {
   }
 
   if (ResContStoreInstance.accommsSelId) {
-    const accommsSel = SearchBarStoreInstance.accommsData.filter((accomms) => {
+    accommsSel = SearchBarStoreInstance.accommsData.filter((accomms) => {
       return accomms.id === ResContStoreInstance.accommsSelId
     })
 
@@ -34,8 +36,40 @@ export const FlightAccommsCombo:React.FC = observer(() => {
   }
 
   const addToSaved = () => {
+    let base = new Airtable({
+      apiKey: 'patgSP0oORNHp823P.b044ad99929dae10bdd8499c2897e0552acea192f09dddd23bf096de611039e7'
+    }).base('app5W1PLrSDCWkUXx');
 
+    const fromDateObj = SearchBarStoreInstance.userInput.fromDate;
+    const fromDate = `${fromDateObj.year}-${fromDateObj.month}-${fromDateObj.day}`;
+
+    const toDateObj = SearchBarStoreInstance.userInput.toDate;
+    const toDate = `${toDateObj.year}-${toDateObj.month}-${toDateObj.day}`;
+
+    base('tblVFNjPi1Tq9xN3d').create([
+      {
+        //@ts-ignore
+        "fields": {
+          "origin": SearchBarStoreInstance.userInput.origin,
+          "destination": SearchBarStoreInstance.userInput.destination,
+          "travellers": SearchBarStoreInstance.userInput.travellers,
+          "fromDate": fromDate,
+          "toDate": toDate,
+          "flightCost": flightPrice,
+          "accommsCost": accommsPrice
+        }
+      }
+    ], function(err: any, records: any[]) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      records.forEach((record) => {
+        console.log(record.getId())
+      })
+    })
   }
+
 
   return (
     <>
@@ -52,8 +86,8 @@ export const FlightAccommsCombo:React.FC = observer(() => {
             <Typography variant="caption">Accomms - ${accommsPrice}</Typography>
         </CardContent>
         <CardActions style={{ display: "block" }}>
-          <IconButton aria-label="save">
-            <FavoriteIcon style={{ color: "red" }} onClick={() => handleSave()}>
+          <IconButton aria-label="save" onClick={() => handleSave()}>
+            <FavoriteIcon style={{ color: "red" }}>
               SAVE
             </FavoriteIcon>
           </IconButton>
