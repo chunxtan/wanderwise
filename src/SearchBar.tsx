@@ -223,13 +223,14 @@ export const SearchBar = observer(() => {
       noValidate
       autoComplete='off'
     >
-      <div id="input-where" className="inputCat">
+      <div className="inputCat">
         <TextField 
           className="inputField"
           id="input-origin"
           label="Where From"
           type="search"
           variant="standard"
+          sx={{ width: "25%", margin: 2 }}
           onChange={(e) => store.setUserInput({...store.userInput, origin:`${e.target.value}` })}
         />
         <TextField 
@@ -238,16 +239,16 @@ export const SearchBar = observer(() => {
           label="Where To"
           type="search"
           variant="standard"
+          sx={{ width: "25%", margin: 2 }}
           onChange={(e) => store.setUserInput({...store.userInput, destination:`${e.target.value}` })}
         />
-      </div>
-      <div id="input-who" className="inputCat">
         <TextField 
           className="inputField"
           id="input-travellers"
           label="Travellers"
           type="number"
           variant="standard"
+          sx={{ width: "25%", margin: 2 }}
           onChange={(e) => 
             store.setUserInput({
               ...store.userInput, 
@@ -256,9 +257,10 @@ export const SearchBar = observer(() => {
           }
         />
       </div>
-      <div id="input=when" className="inputCat">
+      <div className="inputCat">
         <DatePicker
           label="When From"
+          sx={{ width: "35%", marginRight: 3 }}
           onChange={(date: Dayjs | null) => {
             const newFromDateArrStr = dayjs(date).format('DD/MM/YYYY').split('/');
             const newFromDateArr = newFromDateArrStr.map(num => parseInt(num, 10));
@@ -272,6 +274,7 @@ export const SearchBar = observer(() => {
         />
         <DatePicker
           label="When To"
+          sx={{ width: "35%" }}
           onChange={(date: Dayjs | null) => {
             const newToDatArrStr = dayjs(date).format('DD/MM/YYYY').split('/');
             const newToDateArr = newToDatArrStr.map(num => parseInt(num, 10));
