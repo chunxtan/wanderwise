@@ -9,7 +9,7 @@ export const Saved: React.FC = () => {
 
   React.useEffect(() => {
     const base = new Airtable({
-      apiKey: 'patgSP0oORNHp823P.b044ad99929dae10bdd8499c2897e0552acea192f09dddd23bf096de611039e7'
+      apiKey: `${process.env.VITE_REACT_AIRTABLE_KEY}`
     }).base('app5W1PLrSDCWkUXx');
   
     base('tblVFNjPi1Tq9xN3d').select({})
