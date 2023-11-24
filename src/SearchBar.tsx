@@ -296,8 +296,8 @@ export const SearchBar = observer(() => {
             : <Button variant="contained" 
                 onClick={async () => {
                   store.setIsFetchingData(true);
-                  fetchFlights();
-                  await fetchAccoms();
+                  fetchAccoms();
+                  await fetchFlights();
                   store.setIsFetchingData(false);
                 }}>
                   SEARCH
