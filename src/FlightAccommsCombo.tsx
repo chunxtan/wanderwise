@@ -37,6 +37,7 @@ export const FlightAccommsCombo:React.FC = observer(() => {
 
   const addToSaved = () => {
     let base = new Airtable({
+      //@ts-ignore
       apiKey: `${import.meta.env.VITE_REACT_AIRTABLE_KEY}`
     }).base('app5W1PLrSDCWkUXx');
 
