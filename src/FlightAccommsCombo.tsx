@@ -37,7 +37,7 @@ export const FlightAccommsCombo:React.FC = observer(() => {
 
   const addToSaved = () => {
     let base = new Airtable({
-      apiKey: 'patgSP0oORNHp823P.b044ad99929dae10bdd8499c2897e0552acea192f09dddd23bf096de611039e7'
+      apiKey: `${import.meta.env.VITE_REACT_AIRTABLE_KEY}`
     }).base('app5W1PLrSDCWkUXx');
 
     const fromDateObj = SearchBarStoreInstance.userInput.fromDate;

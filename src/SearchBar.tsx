@@ -118,7 +118,6 @@ export const SearchBar = observer(() => {
 
   const getAccommsDestId = async () => {
     const baseUrl = 'https://getskyscanner.vercel.app/api/getAccommsDestId';
-    // const baseUrl = 'http://localhost:8080/api/getAccommsDestId';
 
     const queryParams = {
       q: `${store.userInput.destination}`,
@@ -141,7 +140,6 @@ export const SearchBar = observer(() => {
 
   const getAccomms = async () => {
     const url = 'https://getskyscanner.vercel.app/api/getAccomms';
-    // const url = 'http://localhost:8080/api/getAccomms';
 
     const options = {
       method: 'POST',
