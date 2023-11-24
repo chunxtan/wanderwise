@@ -9,7 +9,6 @@ import { Date, AccommsData, SearchBarStoreInstance, FlightsData } from "./Search
 
 
 export const SearchBar = () => {
-  const [destGaiaId, setDestGaiaId] = React.useState("");
 
   const store = SearchBarStoreInstance;
 
@@ -110,8 +109,7 @@ export const SearchBar = () => {
   }
 
   const getAccommsDestId = async () => {
-    // const baseUrl = 'https://hotels4.p.rapidapi.com/locations/v3/search';
-    const baseUrl = 'http://localhost:8080/api/getAccommsDestId';
+    const baseUrl = 'https://getskyscanner.vercel.app/api/getAccommsDestId';
 
     const queryParams = {
       q: `${store.userInput.destination}`,
@@ -126,21 +124,19 @@ export const SearchBar = () => {
       const response = await fetch(url.href);
       const result = await response.json();
       console.log(result);
-      setDestGaiaId(result.sr[0].gaiaId);
-      getAccomms();
+      store.accommsDestId = result.sr[0].gaiaId;
     } catch(error) {
       console.error(error);
     }
   }
 
   const getAccomms = async () => {
-    const url = 'https://hotels4.p.rapidapi.com/properties/v2/list';
+    const url = 'https://getskyscanner.vercel.app/api/getAccomms';
+
     const options = {
       method: 'POST',
       headers: {
-        'content-type': 'application/json',
-        'X-RapidAPI-Key': 'b500f91511mshf2caf0e30b9ee36p179951jsn5cccf8010b47',
-        'X-RapidAPI-Host': 'hotels4.p.rapidapi.com'
+        'content-type': 'application/json'
       },
       body: JSON.stringify({
         currency: 'SGD',
@@ -148,7 +144,7 @@ export const SearchBar = () => {
         locale: 'en_SG',
         siteId: 300000040,
         destination: {
-          regionId: `${destGaiaId}`
+          regionId: `${store.accommsDestId}`
         },
         checkInDate: {
           day: store.userInput.fromDate.day,
@@ -194,6 +190,9 @@ export const SearchBar = () => {
         }
       })
       console.log(newAccommsData);
+      if (store.accommsData.length > 0) {
+        store.accommsData = [];
+      }
       store.setAccommsData(newAccommsData);
     } catch (error) {
       console.error(error);
@@ -270,11 +269,11 @@ export const SearchBar = () => {
       </div>
       <Button variant="contained" 
         onClick={async () => {
-          // To remove when data retrieved
           await getFlightIataCode("origin");
           await getFlightIataCode("destination");
           getFlightOptions();
-          getAccommsDestId();
+          await getAccommsDestId();
+          getAccomms();
         }}>
           SEARCH
       </Button>
