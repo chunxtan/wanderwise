@@ -20,7 +20,7 @@ export default function ResultsContainer() {
           <HotelIcon fontSize='large' />
           <AccommsResults />
         </Grid>
-        <Grid xs={12} md={4} lg={2}>
+        <Grid xs={12} md={4} lg={4}>
           <AttachMoneyIcon fontSize='large' />
           <FlightAccommsCombo />
         </Grid>
