@@ -6,6 +6,8 @@ export const Home: React.FC = () => {
   return (
     <>
       <SearchBar />
+      <br />
+      <br />
       <ResultsContainer />
     </>
   )

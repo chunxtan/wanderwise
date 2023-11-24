@@ -1,4 +1,5 @@
 .NavBarLink {
   display: flex;
   justify-content: center;
+  color: lightgrey;
 }
