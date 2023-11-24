@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlightsData, SearchBarStoreInstance, UserInput } from './SearchBarStore';
-import { Card, CardActionArea, CardContent, Paper } from '@mui/material';
+import { Card, CardActionArea, CardContent, Paper, Typography } from '@mui/material';
 import Stack from '@mui/system/Stack';
 import './FlightsResultsItem.css';
 import ResContStoreInstance from './ResultsContainerStore';
@@ -21,6 +21,12 @@ const FlightsResultsItem: React.FC<FlightsResProps> = observer(({ flightsData })
       resStore.setFlightSelId(null);
     }
   }
+
+  const formattedHourD = flightsData.departureDateTime.hour.toString().padStart(2, '0');
+  const formattedMinuteD = flightsData.departureDateTime.minute.toString().padStart(2, '0');
+  const formattedHourA = flightsData.arrivalDateTime.hour.toString().padStart(2, '0');
+  const formattedMinuteA = flightsData.arrivalDateTime.minute.toString().padStart(2, '0');
+  
   return (
     <Card 
       className="FlightsResItem" 
@@ -30,22 +36,22 @@ const FlightsResultsItem: React.FC<FlightsResProps> = observer(({ flightsData })
       }}>
       <CardActionArea onClick={() => handleClick()}>
         <CardContent>
-          <Stack direction="row" spacing={2}>
-            <div>
+          <Stack direction="row" spacing={2} style={{ justifyContent: "center", marginBottom: "6px" }}>
+            <Typography variant="subtitle2">
               {store.iataCodes.origin.toUpperCase()} <br />
-              {flightsData.departureDateTime.hour + "." + flightsData.departureDateTime.minute}
-            </div>
+              {`${formattedHourD}:${formattedMinuteD}`}
+            </Typography>
             <div>
               ➡️
             </div>
-            <div>
+            <Typography variant="subtitle2">
               {store.iataCodes.destination.toUpperCase()} <br />
-              {flightsData.arrivalDateTime.hour + "." + flightsData.arrivalDateTime.minute}
-            </div>
+              {`${formattedHourA}:${formattedMinuteA}`}
+            </Typography>
           </Stack>
-          <Paper>
+          <Typography variant="h6">
             ${parseFloat(flightsData.price) / 1000}
-          </Paper>
+          </Typography>
         </CardContent>
       </CardActionArea>
     </Card>

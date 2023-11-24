@@ -190,7 +190,7 @@ export const SearchBar = observer(() => {
             lat: listing.mapMarker.latLong.latitude,
             long: listing.mapMarker.latLong.longitude
           },
-          price: listing.price.options[0].formattedDisplayPrice,
+          price: listing.price.options[0].formattedDisplayPrice.slice(1),
           reviews: {
             score: listing.reviews.score,
             total: listing.reviews.total
