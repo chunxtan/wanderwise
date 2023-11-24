@@ -56,6 +56,7 @@ class SearchBarStore {
     destination: string;
   };
   flightsData: FlightsData[];
+  isFetchingData: boolean;
 
   constructor() {
     makeObservable(this, {
@@ -63,7 +64,10 @@ class SearchBarStore {
       setAccommsData: action,
 
       flightsData: observable,
-      setFlightsData: action
+      setFlightsData: action,
+
+      isFetchingData: observable,
+      setIsFetchingData: action
     });
 
     this.userInput = {
@@ -88,6 +92,7 @@ class SearchBarStore {
       destination: ""
     },
     this.flightsData = [];
+    this.isFetchingData = false;
   }
 
   setUserInput(newInput: UserInput) {
@@ -100,6 +105,10 @@ class SearchBarStore {
 
   setFlightsData(flights: FlightsData[]) {
     this.flightsData = flights;
+  }
+
+  setIsFetchingData(val: boolean) {
+    this.isFetchingData = val;
   }
 }
 

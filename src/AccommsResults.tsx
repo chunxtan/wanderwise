@@ -8,8 +8,8 @@ const AccommsResults: React.FC = observer(() => {
   const store = SearchBarStoreInstance;
 
   return (
-    store.accommsData.map((listing: AccommsData) => {
-      return <AccommsResultsItem key={listing.id} listing={listing} />
+    store.accommsData.map((listing: AccommsData, idx: number) => {
+      return <AccommsResultsItem key={idx} listing={listing} />
     })
   )
 })

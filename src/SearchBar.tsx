@@ -6,9 +6,11 @@ import { DatePicker } from "@mui/x-date-pickers";
 import './SearchBar.css'
 import dayjs, { Dayjs } from 'dayjs'; 
 import { Date, AccommsData, SearchBarStoreInstance, FlightsData } from "./SearchBarStore";
+import { LoadingButton } from '@mui/lab';
+import { observer } from 'mobx-react-lite';
 
 
-export const SearchBar = () => {
+export const SearchBar = observer(() => {
 
   const store = SearchBarStoreInstance;
 
@@ -108,8 +110,15 @@ export const SearchBar = () => {
     }
   }
 
+  const fetchFlights = async () => {
+    await getFlightIataCode("origin");
+    await getFlightIataCode("destination");
+    getFlightOptions();
+  }
+
   const getAccommsDestId = async () => {
     const baseUrl = 'https://getskyscanner.vercel.app/api/getAccommsDestId';
+    // const baseUrl = 'http://localhost:8080/api/getAccommsDestId';
 
     const queryParams = {
       q: `${store.userInput.destination}`,
@@ -132,6 +141,7 @@ export const SearchBar = () => {
 
   const getAccomms = async () => {
     const url = 'https://getskyscanner.vercel.app/api/getAccomms';
+    // const url = 'http://localhost:8080/api/getAccomms';
 
     const options = {
       method: 'POST',
@@ -196,6 +206,15 @@ export const SearchBar = () => {
       store.setAccommsData(newAccommsData);
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  const fetchAccoms = async() => {
+    await getAccommsDestId();
+    if (store.accommsDestId) {
+      await getAccomms();
+    } else {
+      console.log("No DestId: ", store.accommsDestId)
     }
   }
 
@@ -267,18 +286,24 @@ export const SearchBar = () => {
               toDate: newToDate})}}  
         />
       </div>
-      <Button variant="contained" 
-        onClick={async () => {
-          await getFlightIataCode("origin");
-          await getFlightIataCode("destination");
-          getFlightOptions();
-          await getAccommsDestId();
-          getAccomms();
-        }}>
-          SEARCH
-      </Button>
+        { store.isFetchingData  
+            ? <LoadingButton 
+                loading 
+                variant="contained" >
+                <span>SEARCH</span>
+              </LoadingButton>
+            : <Button variant="contained" 
+                onClick={async () => {
+                  store.setIsFetchingData(true);
+                  fetchFlights();
+                  await fetchAccoms();
+                  store.setIsFetchingData(false);
+                }}>
+                  SEARCH
+              </Button>
+        }
     </Box>
   )
-}
+})
 
 export default SearchBar;
