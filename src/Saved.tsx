@@ -9,7 +9,8 @@ export const Saved: React.FC = () => {
 
   React.useEffect(() => {
     const base = new Airtable({
-      apiKey: `${process.env.VITE_REACT_AIRTABLE_KEY}`
+      // @ts-ignore
+      apiKey: `${import.meta.env.VITE_REACT_AIRTABLE_KEY}`
     }).base('app5W1PLrSDCWkUXx');
   
     base('tblVFNjPi1Tq9xN3d').select({})
