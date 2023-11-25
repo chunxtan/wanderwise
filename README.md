@@ -8,7 +8,9 @@ Travel cost calculator for a quick overview of trip costs & save potential itine
 * Save your potential trip itinerary for later
 
 Made with React, TypeScript, MobX & Express.js 
-Styled by Material UI
+ / Styled by Material UI
+<img width="1680" alt="Screenshot 2023-11-25 at 09 36 59" src="https://github.com/chunxtan/wanderwise/assets/99042026/cef8da84-68f0-4d0c-8138-ee4806e2c7a8">
+
 
 ## Process
 ### 1. Figma Prototyping
