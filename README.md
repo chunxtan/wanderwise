@@ -63,8 +63,10 @@ Overall, working with third-party private APIs can be quite a pain.
 #### UI
 * More aligned with envisioned UI
 #### Features
-* Addition of map to allow users to see locations of accommodation options
-* Grouping of trips for comparison
+* User can see accommodation options + airport locations on a map
+* User can group saved trips for comparison of options
+* User can sort accommodation options by price & ratings
+* User can choose generic times as date range 
 #### Dev 
 * Error catching & making it known to users (e.g. when input origin/destination is invalid)
 * Separation of concerns between business logic & UI changes
