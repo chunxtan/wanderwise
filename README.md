@@ -62,7 +62,6 @@ Overall, working with third-party private APIs can be quite a pain.
 ## Future Development
 #### UI
 * More aligned with envisioned UI
-* Parse time for flights
 #### Features
 * Addition of map to allow users to see locations of accommodation options
 * Grouping of trips for comparison
@@ -71,5 +70,5 @@ Overall, working with third-party private APIs can be quite a pain.
 * Separation of concerns between business logic & UI changes
 
 ## Takeaways
-* Don't be afraid to try, even when you're not entirely sure of the outcome.
-* Fail quickly
+* Don't be afraid to try, even when you're not entirely sure of the outcome (Config files, Backend set-up)
+* Fail quickly (APIs)
