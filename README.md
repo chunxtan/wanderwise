@@ -60,9 +60,15 @@ Overall, working with third-party private APIs can be quite a pain.
   * Pass states between components without prop-lifting
 
 ## Future Development
-* Clean up UI
-  * More aligned with envisioned UI
-  * Parse time for flights
+#### UI
+* More aligned with envisioned UI
+* Parse time for flights
+#### Features
 * Addition of map to allow users to see locations of accommodation options
+* Grouping of trips for comparison
+#### Dev 
 * Error catching & making it known to users (e.g. when input origin/destination is invalid)
 * Separation of concerns between business logic & UI changes
+
+## Takeaways
+* Don't be afraid to try, even when you're not entirely sure of the outcome.
