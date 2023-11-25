@@ -72,3 +72,4 @@ Overall, working with third-party private APIs can be quite a pain.
 
 ## Takeaways
 * Don't be afraid to try, even when you're not entirely sure of the outcome.
+* Fail quickly
